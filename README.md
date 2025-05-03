@@ -51,11 +51,6 @@ A colorful and animated trivia web app built with **Flask (Python)** and **vanil
 
 ---
 
-## 📸 Demo Preview
-
-*(Insert a GIF or screenshot here once deployed)*
-
----
 
 ## 💡 Future Enhancements
 
