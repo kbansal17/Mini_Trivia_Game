@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mini Trivia Game</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Mini Trivia Game 🎉</h1>
+    <div id="quiz-box">
+      <p id="question"></p>
+      <div id="options"></div>
+    </div>
+    <div id="score-box" style="display:none;">
+      <h2>Your Score: <span id="final-score"></span>/5</h2>
+    </div>
+  </div>
+
+  <script>
+    let questions = [], current = 0, score = 0;
+
+    fetch("/questions")
+      .then(res => res.json())
+      .then(data => {
+        questions = data;
+        showQuestion();
+      });
+
+    function showQuestion() {
+      const q = questions[current];
+      document.getElementById("question").textContent = q.question;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.className = "option";
+        btn.onclick = () => handleAnswer(opt === q.answer);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function handleAnswer(correct) {
+      const buttons = document.querySelectorAll(".option");
+      buttons.forEach(btn => btn.disabled = true);
+
+      if (correct) {
+        score++;
+        event.target.classList.add("correct");
+      } else {
+        event.target.classList.add("wrong");
+      }
+
+      setTimeout(() => {
+        current++;
+        if (current < questions.length) {
+          showQuestion();
+        } else {
+          document.getElementById("quiz-box").style.display = "none";
+          document.getElementById("final-score").textContent = score;
+          document.getElementById("score-box").style.display = "block";
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
