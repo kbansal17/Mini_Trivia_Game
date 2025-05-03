@@ -26,7 +26,7 @@ A colorful and animated trivia web app built with **Flask (Python)** and **vanil
    ```bash
    git clone https://github.com/<your-username>/mini-trivia-game.git
    cd mini-trivia-game
-````
+
 
 2. **Create a virtual environment (optional but recommended)**
 
